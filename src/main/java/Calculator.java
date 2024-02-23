@@ -7,43 +7,24 @@ public class Calculator {
 
     public Calculator(int numberOfPeople) {
         this.numberOfPeople = numberOfPeople;
-        this.products = new Product[10]; //Предполагаю, что товаров будет добавлено макс 10 штук. Можно изменить значение в большую сторону
+        this.products = new Product[10];
         this.productCount = 0;
     }
 
     public void addProduct(Scanner scanner) {
-        String inputProductName = "";
         System.out.println("Введите название товара:");
+        String productName = scanner.next();
 
-        while (true) {
-            inputProductName = scanner.next();
-
-            if (inputProductName.matches(".*\\d.*")) {
-                System.out.println("Некорректное наименование. Повторите ввод:");
-            } else {
-                break;
-            }
-        }
-
-        double inputProductPrice = 0.0;
         System.out.println("Введите стоимость товара: ");
-        while (true) {
-            while (!scanner.hasNextDouble()) {
-                System.out.println("Некорректное значение. Повторите ввод:");
-                scanner.next();
-            }
-            inputProductPrice = scanner.nextDouble();
-            if (inputProductPrice <= 0) {
-                System.out.println("Некорректное значение. Повторите ввод:");
-            } else {
-                break;
-            }
+        while (!scanner.hasNextDouble()) {
+            System.out.println("Некорректное значение. Повторите ввод:");
+            scanner.next();
         }
+        double productPrice = scanner.nextDouble();
 
         if (productCount < products.length) {
-            products[productCount] = new Product(inputProductName, inputProductPrice);
-            productCount++;
-            System.out.println("Товар добавлен: " + inputProductName + " (стоимость: " + Formatter.formatCurrency(inputProductPrice) + ")");
+            products[productCount++] = new Product(productName, productPrice);
+            System.out.println("Товар добавлен: " + productName + " (стоимость: " + Formatter.formatCurrency(productPrice) + ")");
         }
     }
 
@@ -62,20 +43,5 @@ public class Calculator {
         double billPerPerson = totalBill / numberOfPeople;
 
         System.out.println("Сумма на одного человека: " + Formatter.formatCurrency(billPerPerson));
-    }
-
-    public boolean addNewProduct(Scanner scanner) {
-        System.out.println("Введите: 'Продолжить' для добавления нового товара 'Завершить' для завершения");
-
-        do {
-            String inputEndOrContinue = scanner.next().toLowerCase();
-            if (inputEndOrContinue.equals("завершить")) {
-                return true;
-            } else if (inputEndOrContinue.equals("продолжить")) {
-                return false;
-            } else {
-                System.out.println("Некорректный ввод. Введите: 'Продолжить' для добавления нового товара 'Завершить' для завершения");
-            }
-        } while (true);
     }
 }
