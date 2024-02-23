@@ -7,7 +7,6 @@ public class Main {
 
         System.out.println("Добрый день. На сколько человек необходимо разделить счет?");
 
-
         while (true) {
             while (!scanner.hasNextInt()) {
                 System.out.println("Необходимо ввести число. Повторите ввод:");
@@ -32,7 +31,5 @@ public class Main {
         System.out.println("Добавленные товары:");
         calculator.showProducts();
         calculator.calculateBill();
-
     }
-
 }
