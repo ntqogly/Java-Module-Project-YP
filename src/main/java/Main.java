@@ -5,28 +5,29 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         int inputNumberOfPeople;
 
-        while (true) {
-            System.out.println("Добрый день. На сколько человек необходимо разделить счет?");
+        System.out.println("Добрый день. На сколько человек необходимо разделить счет?");
 
+
+        while (true) {
             while (!scanner.hasNextInt()) {
                 System.out.println("Необходимо ввести число. Повторите ввод:");
                 scanner.next();
             }
             inputNumberOfPeople = scanner.nextInt();
 
-            if (inputNumberOfPeople <= 1) {
-                System.out.println("Некорректное значение для подсчета. Повторите ввод");
-                scanner.next();
+            if (inputNumberOfPeople == 1) {
+                System.out.println("Некорректное значение для подсчета. Повторите ввод:");
+            } else if (inputNumberOfPeople < 1) {
+                System.out.println("Некорректное значение для подсчета. Повторите ввод:");
             } else {
                 break;
             }
         }
 
         Calculator calculator = new Calculator(inputNumberOfPeople);
-        while (true) {
+        do {
             calculator.addProduct(scanner);
-            if (endingOptions(scanner, calculator)) break;
-        }
+        } while (!calculator.addNewProduct(scanner));
 
         System.out.println("Добавленные товары:");
         calculator.showProducts();
@@ -34,17 +35,4 @@ public class Main {
 
     }
 
-
-    private static boolean endingOptions(Scanner scanner, Calculator calculator) {
-        System.out.println("Введите: " +
-                "'Продолжить' для добавления нового товара " +
-                "'Завершить' для завершения");
-        String inputEndOrContinue = scanner.next().toLowerCase();
-        if (inputEndOrContinue.equals("завершить")) {
-            return true;
-        } else if (inputEndOrContinue.equals("продолжить")) {
-            calculator.addProduct(scanner);
-        }
-        return false;
-    }
 }
